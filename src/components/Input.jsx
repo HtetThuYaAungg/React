@@ -1,9 +1,12 @@
 import React,{useRef} from 'react'
 
-const Input = () => {
+const Input = ({createList}) => {
 
     const inputText = useRef();
-    const showAlert = () => alert(inputText.current.value);
+    const showAlert = () => {
+      createList(inputText.current.value);
+      inputText.current.value = "";
+    };
    
 
   return (

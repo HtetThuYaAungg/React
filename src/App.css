@@ -71,3 +71,29 @@
     transform: rotate(90deg);
     color: white;
 }
+
+.ani-effect{
+    animation: ani 0.5s linear;
+}
+
+.slide-down{
+    animation: slideDown 0.5s linear;
+}
+
+@keyframes ani {
+    from{
+        opacity: 0.5;
+        transform: scale(0.8);
+    }to{
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideDown {
+    from{
+        transform: translateY(-40px);
+    }to{
+        transform: translateY(0px);
+    }
+}
