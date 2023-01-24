@@ -1,24 +1,59 @@
-import React from 'react'
+import React,{useState} from 'react'
 
 import NavBar from './NavBar'
+import productList from './../data';
+import ProductCard from './ProductCard';
 
 const Shop = () => {
+
+    const [products, setProduct] = useState(productList);
+
+    const [cart, setCart] = useState([]);
+
+    
+    const addToCart = (id) => { 
+        const currentProduct = products.find(product => product.id === id);
+        const newItemforCart = {
+            id: Date.now(),
+            product: currentProduct,
+            quantity: 1,
+        };
+        setCart([...cart, newItemforCart]);
+    };
+
+    const increase = (cartId) => {
+        setCart(cart.map(itemInCart => {
+            if (itemInCart.id === cartId){
+                itemInCart.quantity += 1;
+            }
+            return itemInCart;
+        }))
+    }
+
+    const decrease = (cartId) => {
+        setCart(cart.map(itemInCart => {
+            if (itemInCart.id === cartId && itemInCart.quantity > 1) {
+                itemInCart.quantity -= 1;
+            }
+            return itemInCart;
+        }))
+    }
+
+    const deleteCart = (cartId) => {
+        setCart(cart.filter((itemInCart) => cartId !== itemInCart.id));
+    }
+
   return <div className="">
     <div className="container">
-        <div className="row">
-            <div className="col-12">
-                <div className="d-flex justify-content-between align-items-center border rounded border-dark p-3">
-                    <h3>ONLINE SHOP</h3>
-                    <div className="">
-                        <button className="btn btn-outline-dark me-2">
-                            <i className="bi bi-search"></i>
-                        </button>
-                        <button className="btn btn-outline-dark">
-                            <i className="bi bi-bag"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
+        <div className="row g-3">
+            <div className=" col-12">
+                  <NavBar increase={increase} decrease={decrease} cart={cart} deleteCart={deleteCart} />
+              </div>
+              {products.map((product) => (
+                  <div key={product.id} className="col-6 col-md-4 col-xl-3">
+                      <ProductCard cart={cart} addToCart={addToCart} product={product}/>
+                  </div>
+            ))}
         </div>
     </div>
     </div>
