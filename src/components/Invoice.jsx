@@ -58,7 +58,7 @@ const Invoice = () => {
 
     const increaseList = (id) => {
         setList(lists.map(list=>{
-            if(list.id === id){
+            if(list.id === id && list.quantity < 10){
                 list.quantity += 1;
                 list.cost = list.item.price * list.quantity;
             }
